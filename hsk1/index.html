@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK 1 — Application d'apprentissage du chinois</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>HSK 1 <span class="cn">汉语水平考试一级</span></h1>
+  <nav class="level-nav">
+    <a class="level-link active" href="./">HSK 1</a>
+    <a class="level-link" href="../hsk2/">HSK 2</a>
+    <a class="level-link" href="../">HSK 3</a>
+  </nav>
+  <nav>
+    <button id="tab-flashcards" class="tab active">Fiches</button>
+    <button id="tab-quiz" class="tab">Quiz</button>
+    <button id="tab-list" class="tab">Liste de mots</button>
+  </nav>
+</header>
+
+<main>
+  <section id="view-flashcards" class="view active">
+    <div class="controls">
+      <label>Chapitre :
+        <select id="chapter-select"></select>
+      </label>
+      <button id="shuffle-btn">Mélanger</button>
+    </div>
+    <div id="card" class="card">
+      <div class="card-inner" id="card-inner">
+        <div class="face front">
+          <div class="hanzi" id="card-hanzi"></div>
+          <button class="speak-btn" id="card-speak" title="Écouter la prononciation">🔊</button>
+          <div class="hint">Cliquez pour retourner</div>
+        </div>
+        <div class="face back">
+          <div class="hanzi small" id="card-hanzi-back"></div>
+          <button class="speak-btn" id="card-speak-back" title="Écouter la prononciation">🔊</button>
+          <div class="pinyin" id="card-pinyin"></div>
+          <div class="translation" id="card-translation"></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button id="prev-card">← Précédent</button>
+      <span id="card-counter"></span>
+      <button id="next-card">Suivant →</button>
+    </div>
+  </section>
+
+  <section id="view-quiz" class="view">
+    <div class="controls">
+      <label>Chapitre :
+        <select id="quiz-chapter-select"></select>
+      </label>
+    </div>
+    <div id="quiz-box">
+      <div id="quiz-progress"></div>
+      <div id="quiz-question-wrap">
+        <div class="hanzi" id="quiz-question"></div>
+        <button class="speak-btn" id="quiz-speak" title="Écouter la prononciation">🔊</button>
+      </div>
+      <div id="quiz-choices"></div>
+      <div id="quiz-feedback"></div>
+      <div class="nav-buttons">
+        <button id="quiz-next" class="hidden">Question suivante →</button>
+      </div>
+      <div id="quiz-result" class="hidden"></div>
+    </div>
+  </section>
+
+  <section id="view-list" class="view">
+    <input type="search" id="search-input" placeholder="Rechercher (hanzi, pinyin ou français)…">
+    <table id="word-table">
+      <thead>
+        <tr><th></th><th>Hanzi</th><th>Pinyin</th><th>Français</th><th>Chapitre</th></tr>
+      </thead>
+      <tbody id="word-tbody"></tbody>
+    </table>
+  </section>
+</main>
+
+<footer>
+  <p>Application d'apprentissage du vocabulaire HSK 1 — 汉语水平考试一级</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

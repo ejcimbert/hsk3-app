@@ -1,10 +1,15 @@
-# HSK 3 — Application d'apprentissage (hsk3-app)
+# Applications HSK 1, 2 et 3 — Apprentissage du chinois (hsk3-app)
 
-Application web statique pour réviser le vocabulaire du **HSK 3** (汉语水平考试三级) :
+Trois applications web statiques pour réviser le vocabulaire des niveaux
+**HSK 1** (汉语水平考试一级), **HSK 2** (汉语水平考试二级) et **HSK 3**
+(汉语水平考试三级) :
 
 - **Fiches** : cartes mémoire retournables (hanzi → pinyin + traduction française), par chapitre, avec mode mélangé.
 - **Quiz** : QCM de 10 questions (trouver la traduction française du mot), avec score final.
 - **Liste de mots** : table complète du vocabulaire avec recherche (hanzi, pinyin ou français).
+
+Chaque application propose aussi l'écoute de la prononciation (synthèse vocale
+chinoise, Web Speech API), et un sélecteur permet de passer d'un niveau à l'autre.
 
 ## Utilisation
 
@@ -13,23 +18,30 @@ ou servez le dossier :
 
 ```bash
 python3 -m http.server 8000
-# puis http://localhost:8000
+# HSK 3 : http://localhost:8000
+# HSK 1 : http://localhost:8000/hsk1/
+# HSK 2 : http://localhost:8000/hsk2/
 ```
 
 Compatible GitHub Pages (déploiement direct depuis la branche `main`).
 
 ## Structure
 
-| Fichier      | Rôle                                      |
-|--------------|-------------------------------------------|
-| `index.html` | Structure des trois vues                  |
-| `style.css`  | Mise en page, cartes 3D, responsive        |
-| `data.js`    | Vocabulaire HSK 3 (hanzi, pinyin, français, chapitre) |
-| `app.js`     | Logique fiches / quiz / liste             |
+| Chemin          | Rôle                                        |
+|-----------------|---------------------------------------------|
+| `index.html`    | Application HSK 3 (racine)                  |
+| `style.css`     | Mise en page, cartes 3D, responsive          |
+| `data.js`       | Vocabulaire HSK 3 (hanzi, pinyin, français, chapitre) |
+| `app.js`        | Logique fiches / quiz / liste (commune aux trois niveaux) |
+| `hsk1/`         | Application HSK 1 (index.html, style.css, app.js, data.js) |
+| `hsk2/`         | Application HSK 2 (index.html, style.css, app.js, data.js) |
+
+Chaque dossier de niveau est auto-contenu : mêmes `app.js` et `style.css`,
+seul `data.js` (et le titre de la page) diffère.
 
 ## Personnaliser le vocabulaire
 
-Ajoutez des entrées dans `data.js` au format :
+Ajoutez des entrées dans le `data.js` du niveau souhaité au format :
 
 ```js
 { h: "汉字", p: "hànzì", f: "traduction française", c: 1 }
