@@ -98,10 +98,11 @@ $("chapter-select").addEventListener("change", buildDeck);
 buildDeck();
 
 // ---------- Quiz ----------
-const QUIZ_LEN = 10;
+const QUIZ_LEN = 50;
 let quizQuestions = [];
 let quizIdx = 0;
 let quizScore = 0;
+let quizErrors = [];
 
 function shuffle(arr) {
   const a = arr.slice();
@@ -112,13 +113,16 @@ function shuffle(arr) {
   return a;
 }
 
-function startQuiz() {
-  const pool = shuffle(wordsFor($("quiz-chapter-select").value));
-  if (pool.length < 4) return;
-  quizQuestions = pool.slice(0, Math.min(QUIZ_LEN, pool.length));
+function startQuiz(customPool) {
+  const source = customPool || shuffle(wordsFor($("quiz-chapter-select").value));
+  if (source.length < 1) return;
+  if (!customPool && source.length < 4) return;
+  quizQuestions = shuffle(source).slice(0, Math.min(QUIZ_LEN, source.length));
   quizIdx = 0;
   quizScore = 0;
+  quizErrors = [];
   $("quiz-result").classList.add("hidden");
+  $("quiz-result").innerHTML = "";
   $("quiz-next").classList.add("hidden");
   renderQuizQuestion();
 }
@@ -152,6 +156,7 @@ function answer(btn, chosen, correct) {
     $("quiz-feedback").textContent = "✓ 正确 ! " + correct.h + " (" + correct.p + ") = " + correct.f;
   } else {
     btn.classList.add("wrong");
+    if (!quizErrors.some((w) => w.h === correct.h)) quizErrors.push(correct);
     buttons.forEach((b) => {
       if (b.textContent === correct.f) b.classList.add("correct");
     });
@@ -172,13 +177,36 @@ $("quiz-next").addEventListener("click", () => {
     $("quiz-choices").innerHTML = "";
     $("quiz-question").textContent = "";
     $("quiz-feedback").textContent = "";
-    const res = $("quiz-result");
-    res.classList.remove("hidden");
-    const pct = Math.round((quizScore / quizQuestions.length) * 100);
-    res.textContent = "Score final : " + quizScore + " / " + quizQuestions.length +
-      " (" + pct + "%)";
+    showQuizResult();
   }
 });
+
+function showQuizResult() {
+  const res = $("quiz-result");
+  res.classList.remove("hidden");
+  const pct = Math.round((quizScore / quizQuestions.length) * 100);
+  res.innerHTML = "";
+  const scoreLine = document.createElement("p");
+  scoreLine.textContent = "Score final : " + quizScore + " / " + quizQuestions.length +
+    " (" + pct + "%)";
+  res.appendChild(scoreLine);
+  const actions = document.createElement("div");
+  actions.className = "quiz-actions";
+  const againBtn = document.createElement("button");
+  againBtn.className = "quiz-action-btn";
+  againBtn.textContent = "Refaire un quiz";
+  againBtn.addEventListener("click", () => startQuiz());
+  actions.appendChild(againBtn);
+  if (quizErrors.length > 0) {
+    const errBtn = document.createElement("button");
+    errBtn.className = "quiz-action-btn";
+    errBtn.textContent = "Rejouer mes erreurs (" + quizErrors.length + ")";
+    const pool = quizErrors.slice();
+    errBtn.addEventListener("click", () => startQuiz(pool));
+    actions.appendChild(errBtn);
+  }
+  res.appendChild(actions);
+}
 $("quiz-chapter-select").addEventListener("change", startQuiz);
 startQuiz();
 

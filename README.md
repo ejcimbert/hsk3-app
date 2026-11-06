@@ -5,8 +5,12 @@ Trois applications web statiques pour réviser le vocabulaire des niveaux
 (汉语水平考试三级) :
 
 - **Fiches** : cartes mémoire retournables (hanzi → pinyin + traduction française), par chapitre, avec mode mélangé.
-- **Quiz** : QCM de 10 questions (trouver la traduction française du mot), avec score final.
+- **Quiz** : QCM de 50 questions (trouver la traduction française du mot), avec score final. À la fin, on peut refaire un nouveau quiz ou rejouer uniquement les mots échoués.
 - **Liste de mots** : table complète du vocabulaire avec recherche (hanzi, pinyin ou français).
+
+Le vocabulaire suit le programme officiel **HSK 2.0** (standard 2012) : HSK 1 (150 mots),
+HSK 2 (150 mots nouveaux) et HSK 3 (300 mots nouveaux), dans l'ordre officiel (pinyin
+alphabétique), organisés en chapitres d'environ 20 mots.
 
 Chaque application propose aussi l'écoute de la prononciation (synthèse vocale
 chinoise, Web Speech API), et un sélecteur permet de passer d'un niveau à l'autre.
