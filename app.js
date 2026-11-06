@@ -2,6 +2,20 @@
 
 const $ = (id) => document.getElementById(id);
 
+// ---------- Audio (synthèse vocale chinoise) ----------
+function speak(text) {
+  if (!("speechSynthesis" in window) || !text) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "zh-CN";
+  u.rate = 0.9;
+  const zhVoice = window.speechSynthesis.getVoices().find((v) => v.lang.startsWith("zh"));
+  if (zhVoice) u.voice = zhVoice;
+  window.speechSynthesis.speak(u);
+}
+// Précharge les voix (nécessaire sur certains navigateurs)
+if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
+
 // ---------- Onglets ----------
 const tabs = ["flashcards", "quiz", "list"];
 tabs.forEach((t) => {
@@ -56,6 +70,15 @@ function renderCard() {
   $("card-counter").textContent = (cardIdx + 1) + " / " + deck.length;
 }
 
+$("card-speak").addEventListener("click", (e) => {
+  e.stopPropagation();
+  speak(deck[cardIdx] && deck[cardIdx].h);
+});
+$("card-speak-back").addEventListener("click", (e) => {
+  e.stopPropagation();
+  speak(deck[cardIdx] && deck[cardIdx].h);
+});
+
 $("card").addEventListener("click", () => $("card").classList.toggle("flipped"));
 $("next-card").addEventListener("click", () => {
   if (deck.length) { cardIdx = (cardIdx + 1) % deck.length; renderCard(); }
@@ -105,6 +128,7 @@ function renderQuizQuestion() {
   $("quiz-progress").textContent = "Question " + (quizIdx + 1) + " / " + quizQuestions.length +
     " — Score : " + quizScore;
   $("quiz-question").textContent = w.h;
+  $("quiz-speak").onclick = () => speak(w.h);
   $("quiz-feedback").textContent = "";
   const pool = shuffle(WORDS.filter((x) => x.h !== w.h));
   const choices = shuffle([w, ...pool.slice(0, 3)]);
@@ -168,6 +192,13 @@ function renderList() {
   tbody.innerHTML = "";
   rows.forEach((w) => {
     const tr = document.createElement("tr");
+    const tdS = document.createElement("td");
+    const btnS = document.createElement("button");
+    btnS.className = "speak-cell";
+    btnS.textContent = "🔊";
+    btnS.title = "Écouter";
+    btnS.addEventListener("click", () => speak(w.h));
+    tdS.appendChild(btnS);
     const tdH = document.createElement("td");
     tdH.textContent = w.h;
     const tdP = document.createElement("td");
@@ -176,7 +207,7 @@ function renderList() {
     tdF.textContent = w.f;
     const tdC = document.createElement("td");
     tdC.textContent = w.c;
-    tr.append(tdH, tdP, tdF, tdC);
+    tr.append(tdS, tdH, tdP, tdF, tdC);
     tbody.appendChild(tr);
   });
 }

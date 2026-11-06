@@ -112,6 +112,33 @@ main { flex: 1; max-width: 800px; width: 100%; margin: 0 auto; padding: 1.5rem 1
 #word-table th { background: #b02a30; color: #fff; }
 #word-table td:first-child { font-size: 1.15rem; }
 
+/* Audio */
+.speak-btn {
+  margin-top: .8rem;
+  font-size: 1.4rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 3rem; height: 3rem;
+  cursor: pointer;
+  transition: transform .15s, background .15s;
+}
+.speak-btn:hover { background: #f0f0f0; transform: scale(1.1); }
+
+#quiz-question-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+}
+#quiz-question-wrap .speak-btn { margin-top: 0; width: 2.4rem; height: 2.4rem; font-size: 1.1rem; }
+
+.speak-cell {
+  background: none; border: none; font-size: 1.1rem;
+  cursor: pointer; opacity: .5;
+}
+.speak-cell:hover { opacity: 1; }
+
 footer { text-align: center; padding: 1rem; color: #888; font-size: .85rem; }
 
 @media (max-width: 500px) {

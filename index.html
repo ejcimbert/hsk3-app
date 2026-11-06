@@ -28,10 +28,12 @@
       <div class="card-inner" id="card-inner">
         <div class="face front">
           <div class="hanzi" id="card-hanzi"></div>
+          <button class="speak-btn" id="card-speak" title="Écouter la prononciation">🔊</button>
           <div class="hint">Cliquez pour retourner</div>
         </div>
         <div class="face back">
           <div class="hanzi small" id="card-hanzi-back"></div>
+          <button class="speak-btn" id="card-speak-back" title="Écouter la prononciation">🔊</button>
           <div class="pinyin" id="card-pinyin"></div>
           <div class="translation" id="card-translation"></div>
         </div>
@@ -52,7 +54,10 @@
     </div>
     <div id="quiz-box">
       <div id="quiz-progress"></div>
-      <div class="hanzi" id="quiz-question"></div>
+      <div id="quiz-question-wrap">
+        <div class="hanzi" id="quiz-question"></div>
+        <button class="speak-btn" id="quiz-speak" title="Écouter la prononciation">🔊</button>
+      </div>
       <div id="quiz-choices"></div>
       <div id="quiz-feedback"></div>
       <div class="nav-buttons">
@@ -66,7 +71,7 @@
     <input type="search" id="search-input" placeholder="Rechercher (hanzi, pinyin ou français)…">
     <table id="word-table">
       <thead>
-        <tr><th>Hanzi</th><th>Pinyin</th><th>Français</th><th>Chapitre</th></tr>
+        <tr><th></th><th>Hanzi</th><th>Pinyin</th><th>Français</th><th>Chapitre</th></tr>
       </thead>
       <tbody id="word-tbody"></tbody>
     </table>
